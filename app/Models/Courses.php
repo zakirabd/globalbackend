@@ -16,6 +16,8 @@ class Courses extends Model
         'title',
         'description',
         'duration',
+        'admission',
+        'online',
         'cost',
         'level',
         'timing',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Exams;
 use App\Models\StudentExams;
+use App\Models\StudentInformation;
 use App\Models\User;
 use App\Services\UsersService;
 use Illuminate\Http\Request;
@@ -40,6 +41,12 @@ class UserController extends Controller
         return response()->json(['msg' => 'User status changed successfully.']);
     }
 
+    public function setPassword(Request $request){
+        $user = User::findOrFail(auth()->user()->id);
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return response()->json(['msg' => 'Password Set Successfully.']);
+    }
 
     // /////////////////////////
     public function loginAfterRegister(Request $request){
@@ -84,6 +91,12 @@ class UserController extends Controller
     // register as student
     public function registerStudent(Request $request){
         $user = new User();
+        $check_user = User::where('email', $request->email)->where('student_status', '0')->first();
+
+        if(isset($check_user)){
+            $check_user->delete();
+        }
+
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
         $user->role_id = '4';
@@ -123,6 +136,34 @@ class UserController extends Controller
         return auth()->user();
     }
 
+
+    public function addStudentPersonalInformation(Request $request){
+        $info = StudentInformation::where('user_id', auth()->user()->id)->first();
+        if(isset($info)){
+            $user_info = $info;
+        }else{
+            $user_info = new StudentInformation();
+        }
+        $user_info->fill($request->all());
+        $user_info->user_id = auth()->user()->id;
+        $user_info->save();
+        return response()->json(['msg'=> 'Profile updated successfully.']);
+
+    }
+
+
+    public function getStudentPersonalInformation(Request $request){
+        $info = StudentInformation::where('user_id', auth()->user()->id)->first();
+        if($request->type == 'weekly_schedule'){
+            return $info->weekly_schedule;
+        }else if($request->type == 'classes'){
+            return $info->classes;
+        }else if($request->type == 'class_start_date'){
+            return $info->class_start_date;
+        }else if($request->type == 'all'){
+            return $info;
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -203,7 +244,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(['msg' => 'User Created Successfully.']);
+        return response()->json(['msg' => 'User Updated Successfully.']);
     }
 
     /**

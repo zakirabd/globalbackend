@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPointToStudentExamAnswersTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddPointToStudentExamAnswersTable extends Migration
      */
     public function up()
     {
-        Schema::table('student_exam_answers', function (Blueprint $table) {
-            $table->string('point')->default('0');
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('image');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddPointToStudentExamAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::table('student_exam_answers', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('images');
     }
 }

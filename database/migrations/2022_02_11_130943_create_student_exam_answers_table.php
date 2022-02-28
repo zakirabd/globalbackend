@@ -19,7 +19,7 @@ class CreateStudentExamAnswersTable extends Migration
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->on('users')->references('id')->onDelete('cascade');
 
-            $table->unsignedBigInteger('exam_answer_id');
+            $table->unsignedBigInteger('exam_answer_id')->nullable();
             $table->foreign('exam_answer_id')->on('exam_answers')->references('id')->onDelete('cascade');
             $table->string('is_correct');
             $table->string('status')->default('1');

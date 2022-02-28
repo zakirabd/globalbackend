@@ -9,14 +9,15 @@ class StudentExamAnswers extends Model
 {
     use HasFactory;
 
-    protected $table = 'student_exam_asnwers';
+    protected $table = 'student_exam_answers';
 
     protected $fillable = [
         'student_id',
         'exam_answer_id',
         'is_correct',
         'status',
-        'point'
+        'point',
+        'correct_answer_id'
     ];
 
     public function exam_answer(){

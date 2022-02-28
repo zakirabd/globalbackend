@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPointToStudentExamAnswersTable extends Migration
+class AddCorrectAnswerIdToStudentExamAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddPointToStudentExamAnswersTable extends Migration
     public function up()
     {
         Schema::table('student_exam_answers', function (Blueprint $table) {
-            $table->string('point')->default('0');
+            $table->unsignedBigInteger('correct_answer_id');
+            $table->foreign('correct_answer_id')->on('exam_answers')->references('id')->onDelete('cascade');
         });
     }
 
@@ -26,7 +27,7 @@ class AddPointToStudentExamAnswersTable extends Migration
     public function down()
     {
         Schema::table('student_exam_answers', function (Blueprint $table) {
-            //
+
         });
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\ExamChildQuestionsController;
 use App\Http\Controllers\ExamParentQuestionsController;
 use App\Http\Controllers\ExamsController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LessonsController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\RoleController;
@@ -59,6 +60,14 @@ Route::prefix('v1')->group(function () {
         Route::post('reset-message', [MessagesController::class, 'resetMessages']);
         Route::post('reset-new-message', [MessagesController::class, 'resetNewMessages']);
         Route::get('public-level-exams', [ExamsController::class, 'getLevelExams']);
+        Route::post('level-exams-submit', [ExamsController::class, 'submitExams']);
+        Route::post('set-password', [UserController::class, 'setPassword']);
+        Route::get('exam-result', [ExamsController::class, 'getExamResults']);
+        Route::post('add-personal-info', [UserController::class, 'addStudentPersonalInformation']);
+        Route::get('get-personal-info', [UserController::class, 'getStudentPersonalInformation']);
+        // addStudentPersonalInformation
+
+        Route::resource('image', ImageController::class);
         // reset-new-message
     });
     Route::post('register-as-student', [UserController::class, 'registerStudent']);

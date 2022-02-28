@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPointToStudentExamAnswersTable extends Migration
+class AddAdmissionToCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddPointToStudentExamAnswersTable extends Migration
      */
     public function up()
     {
-        Schema::table('student_exam_answers', function (Blueprint $table) {
-            $table->string('point')->default('0');
+        Schema::table('courses', function (Blueprint $table) {
+            $table->string('admission')->nullable()->after('description');
         });
     }
 
@@ -25,7 +25,7 @@ class AddPointToStudentExamAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::table('student_exam_answers', function (Blueprint $table) {
+        Schema::table('courses', function (Blueprint $table) {
             //
         });
     }
